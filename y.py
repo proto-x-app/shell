@@ -81,7 +81,7 @@ def ensure_software_installed():
         else:
             print("Bitwarden CLI is already installed on Ubuntu.")
 
-    else
+    else:
         print("Unsupported operating system.")
         sys.exit(1)
 
