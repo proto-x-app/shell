@@ -112,8 +112,8 @@ shell = get_shell()
 
 # Example command usage (uncomment to use):
 if isinstance(shell, WindowsShell):
-    shell.powershell_command('Write-Host "Hello from Windows on `hostname`, $USER"')
+    shell.powershell_command('Write-Host "Hello from Windows on \'`hostname`\', $USER"')
 elif isinstance(shell, LinuxShell):
-    shell.execute_command('echo "Hello from Linux on `hostname`, $USER"')
+    shell.execute_command('echo "Hello from Linux on \'`hostname`\', $USER"')
 elif isinstance(shell, MacShell):
-    shell.zsh_command('echo "Hello from MacOs on `hostname`, $USER"')
+    shell.zsh_command('echo "Hello from MacOs on \'`hostname`\', $USER"')
