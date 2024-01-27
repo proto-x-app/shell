@@ -1,5 +1,6 @@
 import subprocess
 import platform
+import os
 
 class WindowsShell:
     """Represents a shell environment in Windows OS."""
@@ -35,41 +36,29 @@ class WindowsShell:
         """
         subprocess.run(["wsl", command], check=True)
 
-
 class LinuxShell:
     """Represents a shell environment in Linux OS."""
 
     def __init__(self):
         """Initialize the Linux shell."""
-        print("Linux shell initiated.")
+        self.default_shell = os.environ.get('SHELL', '/bin/bash')
+        print(f"Linux shell initiated with default shell: {self.default_shell}")
 
-    def sh_command(self, command):
+    def execute_command(self, command):
         """
-        Execute a command in sh (Bourne shell).
+        Execute a command in the default Linux shell.
 
         Args:
-            command (str): The command to execute in sh.
+            command (str): The command to execute.
         """
-        subprocess.run(["sh", "-c", command], check=True)
-
-    def bash_command(self, command):
-        """
-        Execute a command in bash (Bourne Again shell).
-
-        Args:
-            command (str): The command to execute in bash.
-        """
-        subprocess.run(["bash", "-c", command], check=True)
-
-    def zsh_command(self, command):
-        """
-        Execute a command in zsh (Z shell).
-
-        Args:
-            command (str): The command to execute in zsh.
-        """
-        subprocess.run(["zsh", "-c", command], check=True)
-
+        if 'bash' in self.default_shell:
+            subprocess.run(["bash", "-c", command], check=True)
+        elif 'zsh' in self.default_shell:
+            subprocess.run(["zsh", "-c", command], check=True)
+        elif 'sh' in self.default_shell:
+            subprocess.run(["sh", "-c", command], check=True)
+        else:
+            print(f"Unsupported shell: {self.default_shell}")
 
 class MacShell:
     """Represents a shell environment in macOS."""
@@ -123,8 +112,8 @@ shell = get_shell()
 
 # Example command usage (uncomment to use):
 if isinstance(shell, WindowsShell):
-    shell.powershell_command("Write-Host 'Hello from PowerShell'")
+    shell.powershell_command('Write-Host "Hello from Windows on \'`hostname`\', $USER."')
 elif isinstance(shell, LinuxShell):
-    shell.bash_command("echo 'Hello from Bash'")
+    shell.execute_command('echo "Hello from Linux on \'`hostname`\', $USER."')
 elif isinstance(shell, MacShell):
-    shell.zsh_command("echo 'Hello from Zsh'")
+    shell.zsh_command('echo "Hello from MacOs on \'`hostname`\', $USER."')
