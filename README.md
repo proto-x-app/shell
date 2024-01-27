@@ -23,7 +23,7 @@
 
 Ready to dive in? Here's how you can start experimenting with 'shelf':
 
-#### Shell helper
+#### Shell helper (x)
 
 1. **Grab the Script:**
 
